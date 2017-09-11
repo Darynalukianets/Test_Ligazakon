@@ -12,7 +12,6 @@ var gulp = require('gulp'),
     imagemin = require('gulp-imagemin'),
     pngquant = require('imagemin-pngquant'),
     browserSync = require("browser-sync"),
-    spritesmith = require('gulp.spritesmith'),
     babel = require('gulp-babel'),
     reload = browserSync.reload;
 
@@ -28,7 +27,6 @@ var gulp = require('gulp'),
             js: 'src/app.js',
             style: 'src/assets/styles/styles.scss',
             img: 'src/assets/img/*.*',
-            sprite: 'src/assets/img/sprites/*.png'
           },
 
         watch: {
@@ -36,7 +34,6 @@ var gulp = require('gulp'),
           js: 'src/**/**/**/*.js',
           style: 'src/**/**/**/*.scss',
           img: 'src/assets/img/**/*.*',
-          sprite: 'src/assets/img/sprite/*.*'
         },
         clean: './dist'
 };
@@ -91,19 +88,6 @@ gulp.task('style:build', function() {
     .pipe(gulp.dest(path.build.css))
 });
 
-gulp.task('sprite', function () {
-    var spriteData =
-        gulp.src(path.src.sprite)
-            .pipe(spritesmith({
-                imgName: 'sprite.png',
-                cssName: 'sprite.css',
-                imgPath: '../img/sprite.png'
-            }));
-
-    spriteData.img.pipe(gulp.dest('dist/img'));
-    return spriteData.css.pipe(gulp.dest('dist/css/'));
-});
-
 gulp.task('image:build', function () {
     gulp.src(path.src.img)
         .pipe(imagemin({
@@ -125,7 +109,6 @@ gulp.task('build', [
   'html:build',
   'js:build',
   'style:build',
-  'sprite',
   'image:build'
   // 'fonts:build'
 ]);
@@ -143,9 +126,6 @@ gulp.task('watch', function() {
   });
   watch([path.watch.img], function(event, cb) {
     gulp.start('image:build');
-  });
-  watch([path.watch.sprite], function(event, cb) {
-    gulp.start('sprite:build');
   });
 });
 
