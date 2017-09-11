@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="LigazakonTestApp">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<!--<link rel="stylesheet" href="css/styles.css">-->
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>-->
+</head>
+<body>
+<div class="page-container">
+	<main class="main">
+		<div class="menu"></div>
+		<ul ng-controller="MainController">
+			<li ng-repeat="person in people">{{person.name}} - {{person.age}}</li>
+		</ul>
+	</main>
+</div>
+
+<script type="text/javascript" src="js/script.min.js"></script>
+</body>
+</html>
