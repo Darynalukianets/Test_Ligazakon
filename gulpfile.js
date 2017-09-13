@@ -141,9 +141,7 @@ gulp.task('watch', function() {
     gulp.watch('src/**/!(*spec).+(js|html)', ['scripts']);
     gulp.watch('src/**/**/*.scss', ['styles']);
     gulp.watch('src/assets/*', ['assets']);
-
     livereload.listen();
-
     gulp.watch(['dist/**']).on('change', livereload.changed);
 });
 
