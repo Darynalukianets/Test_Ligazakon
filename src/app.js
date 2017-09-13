@@ -1,14 +1,16 @@
-import angular from 'angular';
-
-import 'angular-ui-bootstrap';
-
-angular.module('LigazakonTestApp', [])
-    .controller('MainController', ['$scope', function ($scope) {
-        $scope.people = [
-            { name: 'Paul', age: 50 },
-            { name: 'Roy', age: 60},
-            {name: 'Dan', age: 70}
-        ];
-    }]);
+(function() {
+    'use strict';
+    angular
+        .module('ligazakontestapp', [
+            'ui.bootstrap'
+        ])
+        .controller('MainController', ['$scope', function ($scope) {
+            $scope.people = [
+                { name: 'Paul', age: 50 },
+                { name: 'Roy', age: 60},
+                { name: 'Dan', age: 70}
+                ];
+        }]);
+})();
 
 

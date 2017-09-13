@@ -1,132 +1,159 @@
-'use strict';
-
 var gulp = require('gulp'),
-    uglify = require('gulp-uglify'),
-    concat = require('gulp-concat'),
-    concatCss = require('gulp-concat-css'),
-    cleanCss = require('gulp-clean-css'),
-    sass = require('gulp-sass'),
-    watch = require('gulp-watch'),
-    prefixer = require('gulp-autoprefixer'),
+    bower = require('gulp-main-bower-files'),
     sourcemaps = require('gulp-sourcemaps'),
-    imagemin = require('gulp-imagemin'),
-    pngquant = require('imagemin-pngquant'),
-    browserSync = require("browser-sync"),
+    inject = require('gulp-inject'),
+    gulpFilter = require('gulp-filter'),
+    connect = require('gulp-connect'),
+    sass = require('gulp-sass'),
+    autoprefixer = require('gulp-autoprefixer'),
+    cssnano = require('gulp-cssnano'),
+    jshint = require('gulp-jshint'),
+    uglify = require('gulp-uglify'),
+    rename = require('gulp-rename'),
+    concat = require('gulp-concat'),
+    notify = require('gulp-notify'),
+    livereload = require('gulp-livereload'),
+    del = require('del'),
     babel = require('gulp-babel'),
-    reload = browserSync.reload;
+    embedTemplates = require('gulp-angular-embed-templates'),
+    templateCache = require('gulp-angular-templatecache'),
+    nginclude = require('gulp-nginclude'),
+    gulpif = require('gulp-if'),
+    ngAnnotate = require('gulp-ng-annotate'),
+    merge = require('merge2'),
+    args = require('yargs').argv,
+    ngConstant = require('gulp-ng-constant'),
+    APP_NAME = 'testligazakon',
+    appConfig = {
+        API_URL: args.prod ? 'http://52.72.94.194:8195/api': 'http://localhost:3000/api'
+    };
 
-    var path = {
-        build: {
-            html: 'dist/',
-            js: 'dist/js/',
-            css: 'dist/css/',
-            img: 'dist/img/'
-        },
-        src: {
-            html: 'src/*.html',
-            js: 'src/app.js',
-            style: 'src/assets/styles/styles.scss',
-            img: 'src/assets/img/*.*',
-          },
-
-        watch: {
-          html: 'src/**/**/**/*.html',
-          js: 'src/**/**/**/*.js',
-          style: 'src/**/**/**/*.scss',
-          img: 'src/assets/img/**/*.*',
-        },
-        clean: './dist'
-};
-
-var config = {
-  server: {
-    baseDir: "./dist"
-  },
-  tunnel: true,
-  host: 'localhost',
-  port: 8000,
-  logPrefix: "Test_task"
-};
-
-gulp.task('webserver', function () {
-  browserSync(config);
+gulp.task('html', function() {
+    return gulp.src('src/index.html')
+        .pipe(nginclude()) // put template with ng-include (only for index.html)
+        .pipe(gulp.dest('dist/'));
+    // .pipe(notify({ message: 'Html task complete' }));
 });
 
-// gulp.task('clean', function (cb) {
-//   rimraf(path.clean, cb);
-// });
+gulp.task('bower', function() {
+    var jsFilter = gulpFilter('**/*.js', { restore: true });
+    var cssFilter = gulpFilter('**/*.css', { restore: true });
+    // var fontFilter = gulpFilter('**/*.+(eot|svg|ttf|woff|woff2)');
 
-gulp.task('html:build', function () {
-    gulp.src(path.src.html)
-        .pipe(gulp.dest(path.build.html))
-      });
+    return gulp.src('bower.json')
+        .pipe(bower())
+        .pipe(jsFilter)
+        .pipe(concat('vendor.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('dist/js'))
+        .pipe(jsFilter.restore)
+        .pipe(cssFilter)
+        .pipe(concat('vendor.css'))
+        .pipe(cssnano())
+        .pipe(gulp.dest('dist/css'))
+        .pipe(cssFilter.restore)
+        // .pipe(fontFilter)
+        // .pipe(rename(function(path) {
+        //     if (~path.dirname.indexOf('fonts')) {
+        //         path.dirname = '/fonts'
+        //     }
+        // }))
+        // .pipe(gulp.dest('dist'));
+    // .pipe(notify({ message: 'Bower task complete' }));
+});
 
+gulp.task('styles', function() {
+    var injectOptions = {
+        transform: function(filePath) {
+            filePath = filePath.replace('src/', '');
+            return '@import \'' + filePath + '\';';
+        },
+        starttag: '// injector:scss',
+        endtag: '// endinjector',
+        addRootSlash: false
+    };
 
-gulp.task('js:build', function () {
-    gulp.src(path.src.js)
-        .pipe(sourcemaps.init())
+    return gulp.src('src/app.scss')
+        .pipe(gulpif(!args.prod, sourcemaps.init()))
+        .pipe(inject(gulp.src(['src/**/**/*.scss', '!src/app.scss']),injectOptions))
+        .pipe(sass())
+        .pipe(autoprefixer('last 2 version'))
+        .pipe(gulpif(!args.prod, sourcemaps.write()))
+        // .pipe(gulpif(args.prod, rename({suffix: '.min'})))
+        .pipe(gulpif(args.prod, cssnano()))
+        .pipe(gulp.dest('dist/css'));
+    // .pipe(notify({ message: 'Styles task complete' }));
+});
+
+gulp.task('scripts', function() {
+    var scripts = gulp.src([
+        'src/app.js',
+        'src/app.*.js'//подкорректировать в зависимости от наличия других файлов в корне с конфигами
+    ])
+        .pipe(embedTemplates({basePath:'src'})) // put html templates
+        .pipe(jshint({esversion: 6}))
+        .pipe(jshint.reporter('default'))
+        .pipe(gulpif(!args.prod, sourcemaps.init()))
         .pipe(babel({
             presets: ['es2015']
         }))
-        .pipe(concat('script.min.js'))
-        .pipe(uglify())
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest(path.build.js));
+        .pipe(concat('index.js'))
+        .pipe(gulpif(args.prod, ngAnnotate()))
+        // .pipe(gulpif(args.prod, rename({suffix: '.min'})))
+        .pipe(gulpif(args.prod, uglify()))
+        .pipe(gulpif(!args.prod, sourcemaps.write()))
+        .pipe(concat('scripts.js'));
+
+    var config = ngConstant({
+        name: APP_NAME + '.config',
+        stream: true,
+        wrap: false,
+        constants: appConfig
+    })
+
+    var templates = gulp.src('src/app/templates/*.tmpl.html')
+        .pipe(templateCache('templates.js',{module: APP_NAME}));
+
+    return merge(scripts, config, templates)
+        .pipe(concat('index.js'))
+        .pipe(gulp.dest('dist/js'))
+    // .pipe(notify({ message: 'Scripts task complete' }));
 });
 
-gulp.task('style:build', function() {
-
-  gulp.src(path.src.style)
-    .pipe(sourcemaps.init())
-    .pipe(sass({
-      sourceMap: true,
-      errLogToConsole: true
-    }))
-    .pipe(prefixer())
-    .pipe(cleanCss({compatibility: 'ie8'}))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest(path.build.css))
+gulp.task('assets', function() {
+    return gulp.src('src/assets/**/*')
+        .pipe(gulp.dest('dist/assets'));
+    // .pipe(notify({ message: 'Assets task complete' }));
 });
 
-gulp.task('image:build', function () {
-    gulp.src(path.src.img)
-        .pipe(imagemin({
-            progressive: true,
-            svgoPlugins: [{removeViewBox: false}],
-            use: [pngquant()],
-            interlaced: true
-        }))
-        .pipe(gulp.dest(path.build.img));
+gulp.task('clean', function(done) {
+    del.sync('dist');
+    done();
 });
 
-gulp.task('fonts:build', function() {
-    gulp.src(path.src.fonts)
-        .pipe(gulp.dest(path.build.fonts))
+gulp.task('build', ['clean'], function() {
+    gulp.start('html', 'styles','scripts', 'bower', 'assets');
 });
-
-// рабочая версия
-gulp.task('build', [
-  'html:build',
-  'js:build',
-  'style:build',
-  'image:build'
-  // 'fonts:build'
-]);
-
 
 gulp.task('watch', function() {
-  watch([path.watch.html], function(event, cb) {
-    gulp.start('html:build');
-  });
-  watch([path.watch.style], function(event, cb) {
-    gulp.start('style:build');
-  });
-  watch([path.watch.js], function(event, cb) {
-    gulp.start('js:build');
-  });
-  watch([path.watch.img], function(event, cb) {
-    gulp.start('image:build');
-  });
+    // gulp.watch('src/app/**/*.html', ['scripts']);
+    gulp.watch('src/index.html', ['html']);
+    gulp.watch('src/**/!(*spec).+(js|html)', ['scripts']);
+    gulp.watch('src/**/**/*.scss', ['styles']);
+    gulp.watch('src/assets/*', ['assets']);
+
+    livereload.listen();
+
+    gulp.watch(['dist/**']).on('change', livereload.changed);
 });
 
-gulp.task('default', ['build', 'webserver', 'watch']);
+gulp.task('connect', function() {
+    connect.server({
+        root: 'dist',
+        port: 8080,
+        fallback: __dirname + '/dist/index.html',
+        livereload: true
+    });
+});
+
+gulp.task('default', ['connect', 'watch']);

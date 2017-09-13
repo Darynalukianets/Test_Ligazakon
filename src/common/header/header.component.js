@@ -1,3 +1,13 @@
-/**
- * Created by Дарья on 11.09.2017.
- */
+(function() {
+    'use strict';
+
+    angular
+        .module('ligazakontestapp')
+        .controller('HeaderCtrl', HeaderCtrl);
+
+    /* ngInject */
+    function HeaderCtrl($rootScope, userService) {
+        var vm = this;
+
+    }
+})();

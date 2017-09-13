@@ -1,3 +1,13 @@
-/**
- * Created by Дарья on 11.09.2017.
- */
+(function() {
+    'use strict';
+
+    angular
+        .module('ligazakontestapp')
+        .controller('FooterCtrl', FooterCtrl);
+
+    /* ngInject */
+    function FooterCtrl($rootScope, userService) {
+        var vm = this;
+
+    }
+})();
