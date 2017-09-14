@@ -2,7 +2,8 @@
     'use strict';
     angular
         .module('ligazakontestapp', [
-            'ui.bootstrap'
+            'ui.bootstrap',
+            'testligazakon.routing',
         ])
         .controller('MainController', ['$scope', function ($scope) {
             $scope.people = [
