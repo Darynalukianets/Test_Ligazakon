@@ -1,13 +1,13 @@
-(function() {
-    'use strict';
+// (function() {
+//     'use strict';
 
     function navController($scope, $element, $attrs) {
         var ctrl = this;
 
         ctrl.items = [
-            { value: 'home'},
-            { value: 'about'}
-        ]
+            { value: 'home', state: '' },
+            { value: 'about', state: '' }
+        ];
     }
 
     angular.module('ligazakontestapp').component('navComp', {
@@ -15,4 +15,4 @@
         controller: navController
     });
 
-})();
+// })();

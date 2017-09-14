@@ -88,7 +88,8 @@ gulp.task('styles', function() {
 gulp.task('scripts', function() {
     var scripts = gulp.src([
         'src/app.js',
-        'src/app.*.js'//подкорректировать в зависимости от наличия других файлов в корне с конфигами
+        'src/app.*.js',
+        'src/**/**/*.js'//подкорректировать в зависимости от наличия других файлов в корне с конфигами8
     ])
         .pipe(embedTemplates({basePath:'src'})) // put html templates
         .pipe(jshint({esversion: 6}))

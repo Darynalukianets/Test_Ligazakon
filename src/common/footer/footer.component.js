@@ -6,7 +6,7 @@
         .controller('FooterCtrl', FooterCtrl);
 
     /* ngInject */
-    function FooterCtrl($rootScope, userService) {
+    function FooterCtrl($rootScope) {
         var vm = this;
 
     }
