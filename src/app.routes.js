@@ -13,15 +13,13 @@
         $stateProvider
             .state('homePage', {
                 url: '/',
-                // templateUrl: 'components/home/home.html',
+                templateUrl: 'components/home/home.html',
                 name: 'home',
-                component: 'homePageComp'
             })
             .state('contactPage', {
                 url: '/contact',
-                // templateUrl: 'components/contact/contact.html',
+                templateUrl: 'components/contact/contact.html',
                 name: 'contact',
-                component: 'contactPageComp'
         });
 
         $locationProvider.html5Mode(true);

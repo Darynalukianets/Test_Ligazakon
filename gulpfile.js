@@ -137,8 +137,8 @@ gulp.task('build', ['clean'], function() {
 });
 
 gulp.task('watch', function() {
-    // gulp.watch('src/app/**/*.html', ['scripts']);
-    gulp.watch('src/index.html', ['html']);
+    // gulp.watch('src/**/**/*.html', ['scripts']);
+    gulp.watch(['src/index.html'], ['html']);
     gulp.watch('src/**/!(*spec).+(js|html)', ['scripts']);
     gulp.watch('src/**/**/*.scss', ['styles']);
     gulp.watch('src/assets/*', ['assets']);

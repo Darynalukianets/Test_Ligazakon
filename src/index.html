@@ -13,12 +13,7 @@
 <div class="page-container">
 	<div ng-if="!loading" ng-include="'common/header/header.html'"></div>
 	<main class="main">
-		<nav-comp></nav-comp>
-		<!--<div ui-view></div>-->
 		<ui-view></ui-view>
-		<!--<ul ng-controller="MainController">-->
-			<!--<li ng-repeat="person in people">{{person.name}} - {{person.age}}</li>-->
-		<!--</ul>-->
 	</main>
 	<div ng-if="!loading" ng-include="'common/footer/footer.html'"></div>
 </div>
