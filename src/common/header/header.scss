@@ -1,4 +1,23 @@
 header {
-  text-align: center;
-  color: #4cae4c;
+
+  display-color: #18334a;
+
+  .header-container {
+    display: flex;
+  }
+
+  h1, .nav-container {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+  }
+
+  h1 {
+    width: 20%;
+  }
+
+  .nav-container {
+    width: 80%;
+    justify-content: flex-end;
+  }
 }

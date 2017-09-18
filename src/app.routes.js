@@ -11,16 +11,36 @@
 
     function routing ($stateProvider, $locationProvider) {
         $stateProvider
-            .state('homePage', {
+            .state('home', {
                 url: '/',
                 templateUrl: 'components/home/home.html',
-                name: 'home',
+                name: 'home'
             })
-            .state('contactPage', {
+            .state('contact', {
                 url: '/contact',
                 templateUrl: 'components/contact/contact.html',
-                name: 'contact',
-        });
+                name: 'contact'
+        })
+            .state('about', {
+                url: '/about',
+                templateUrl: 'components/about/about.html',
+                name: 'about',
+            })
+            .state('about.bundles', {
+                abstract: true,
+                url: '/bundles',
+                // temlateUrl: 'components/bundles/bundles.html',
+                template: '<ui-view/>',
+                controller: 'BundlesController'
+            })
+            .state('about.bundles.list', {
+                url: '/bundleslist',
+                templateUrl: 'components/bundles/bundles.list.html'
+            })
+            .state('about.bundles.descr', {
+                url: '/bundlesdescr',
+                templateUrl: 'components/bundles/bundles.descr.html'
+            });
 
         $locationProvider.html5Mode(true);
     }

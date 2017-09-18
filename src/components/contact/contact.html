@@ -1,7 +1,11 @@
-<div>
-	<h1>contacts page</h1>
+<div ng-controller="ContactController">
+	<h1>Contact us</h1>
 	<div class="green">
-		<input type="text">
-		<input type="submit">
+		<form novalidate class="contact-form">
+			<label>Full Name: <input type="text"></label><br />
+			<label>Email: <input type="email"></label><br />
+			<label>Message: <input type="text"></label><br />
+			<input type="submit">
+		</form>
 	</div>
 </div>

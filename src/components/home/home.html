@@ -1,5 +1,13 @@
-<div>
-	<h1>Home page</h1>
-	<div class="red">red</div>
-	<div class="blue">blue</div>
+<div ng-controller="HomeController">
+	<div class="slogan">
+		<h2>{{slogan.head}}</h2>
+		<p>{{slogan.text}}</p>
+	</div>
+	<div class="services">
+		<div ng-repeat="service in services" class="service">
+			<h3>{{service.header}}</h3>
+			<img src="" alt="">
+			<p>{{service.text}}</p>
+		</div>
+	</div>
 </div>

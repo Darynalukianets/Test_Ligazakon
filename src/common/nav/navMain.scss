@@ -1,0 +1,13 @@
+.main-nav {
+  display: flex;
+  list-style: none;
+  text-transform: uppercase;
+
+  li {
+    flex-direction: row;
+  }
+
+  a {
+    padding: 5px 10px;
+  }
+}

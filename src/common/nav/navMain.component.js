@@ -1,25 +1,12 @@
 (function() {
     'use strict';
 
-    // function navController($scope, $element, $attrs) {
-    //     var ctrl = this;
-    //
-    //     ctrl.items = [
-    //         { value: 'home', state: '' },
-    //         { value: 'about', state: '' }
-    //     ];
-    // }
-    //
-    // angular.module('ligazakontestapp').component('navComp', {
-    //     templateUrl: 'common/nav/navMain.html',
-    //     controller: navController
-    // });
-
     angular.module('ligazakontestapp')
         .controller('NavController', [ '$scope', function($scope, $state) {
             $scope.items = [
-                { value: 'home', state: 'homePage' },
-                { value: 'contact', state: 'contactPage' }
+                { value: 'home', state: 'home' },
+                { value: 'contact', state: 'contact' },
+                { value: 'about', state: 'about'}
             ];
         }])
         .directive('navMain', function() {
@@ -28,5 +15,4 @@
                 templateUrl: 'common/nav/navMain.html'
             };
         });
-
 })();
