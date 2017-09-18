@@ -29,17 +29,20 @@
             .state('about.bundles', {
                 abstract: true,
                 url: '/bundles',
-                // temlateUrl: 'components/bundles/bundles.html',
-                template: '<ui-view/>',
+                temlateUrl: 'components/bundles/bundles.html',
+                // template: '<ui-view/>',
                 controller: 'BundlesController'
             })
             .state('about.bundles.list', {
-                url: '/bundleslist',
+                url: '/list',
                 templateUrl: 'components/bundles/bundles.list.html'
             })
             .state('about.bundles.descr', {
-                url: '/bundlesdescr',
-                templateUrl: 'components/bundles/bundles.descr.html'
+                url: '/:id',
+                templateUrl: 'components/bundles/bundles.descr.html',
+                controller: function($scope, $stateParams){
+                    $scope.item = $scope.packages[$stateParams.id];
+                },
             });
 
         $locationProvider.html5Mode(true);
