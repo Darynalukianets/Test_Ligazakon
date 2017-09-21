@@ -1,0 +1,11 @@
+._footer {
+  background-color: #3e5050;
+  color: white;
+  text-align: center;
+
+  .main-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}

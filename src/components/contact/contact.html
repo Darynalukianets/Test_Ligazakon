@@ -1,11 +1,14 @@
-<div ng-controller="ContactController">
-	<h1>Contact us</h1>
-	<div class="green">
-		<form novalidate class="contact-form">
-			<label>Full Name: <input type="text"></label><br />
-			<label>Email: <input type="email"></label><br />
-			<label>Message: <input type="text"></label><br />
-			<input type="submit">
-		</form>
+<div class="contact-page">
+	<div class="content-container">
+		<h1>Contact us</h1>
+		<p>Send us a message and our manager will contact you to give any additional information and place an order for a purchase</p>
+		<div class="form-container" ng-controller="ContactController">
+			<form name="contactForm" novalidate class="contact-form">
+				<label>Full Name: <input type="text" class="fullname" ng-model="user.fullname"  minlength="4" maxlength="30"></label><br />
+				<label>Email: <input type="email" class="email" ng-model="user.mail"  maxlength="30"></label><br />
+				<label>Message: <textarea class="message" cols="30" rows="30" ng-model="user.message"  minlength="10" maxlength="500"></textarea></label><br />
+				<input type="submit" value="SEND" class="send" ng-click="update(user)">
+			</form>
+		</div>
 	</div>
 </div>

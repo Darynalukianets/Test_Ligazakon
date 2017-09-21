@@ -4,13 +4,133 @@
 }
 h2 {
   margin: 0 auto;
-}
-
-.h2 {
   width: 100%;
 }
 
 .packages, .features-container {
   width: 50%;
+}
+
+.choose-pckg, .choose-pckg:visited {
+  display: block;
+  width: 310px;
+  height: 40px;
+  margin: 40px auto 30px;
+  border-radius: 4px;
+  text-align: center;
+  background-color: darkorange;
+  color: white;
+  font-size: 23px;
+  text-transform: uppercase;
+  padding: 4px 0;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+    background-color: #ffa500;
+    color: white;
+  }
+}
+
+.packages-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.package {
+  padding: 5px 0;
+  a {
+    display: block;
+    width: 200px;
+    height: 35px;
+    padding: 2px 0;
+    font-size: 21px;
+    color: white;
+    background-color: #ffa500;
+    border-radius: 2px;
+
+    &:hover {
+      color: white;
+      text-decoration: none;
+      background-color:  #ffc800;
+    }
+  };
+}
+
+.descr {
+  padding: 20px 10%;
+  background-color: #b4e3f9;
+
+  h4 {
+    font-size: 23px;
+    color: #096886;
+  }
+
+  .features {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 0;
+  }
+
+  .feature {
+    list-style: none;
+    font-size: 18px;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 30px;
+  }
+
+  .contact-link {
+    display: block;
+    height: 40px;
+    margin: 40px auto 10px;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #ff671f;
+    color: white;
+    font-size: 23px;
+    text-transform: uppercase;
+    padding: 4px 0;
+
+    &:hover {
+      text-decoration: none;
+      background-color: darkorange;
+      color: white;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+
+  .packages-container {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .package {
+    width: 25%;
+    a {
+      margin: 0 auto;
+      width: 80%;
+    };
+  }
+
+  .descr {
+    padding: 50px 10%;
+
+    .features {
+      flex-direction: row;
+      justify-content: space-around;
+    }
+
+    .contact-link {
+      width: 310px;
+      margin: 40px auto 10px;
+    }
+  }
 }
 

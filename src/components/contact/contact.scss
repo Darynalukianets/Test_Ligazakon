@@ -1,5 +1,166 @@
-.green {
+.contact-page {
   width: 100%;
-  height: 400px;
-  background-color: #4cae4c
+  background-color: #b4e3f9;
+
+  h1 {
+    margin: 0 auto;
+    padding: 50px 0 20px;
+    font-size: 40px;
+    text-transform: uppercase;
+    color: #096886;
+  }
+
+  p {
+    margin: 0 6% 10px;
+  }
+}
+
+.form-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 10px;
+  border: 2px solid white;
+  border-radius: 4px;
+}
+
+.contact-form {
+  width: 100%;
+  margin: 0 auto;
+  text-align: left;
+
+  label {
+    display: block;
+    text-align: center;
+    color: #5e5e5e;
+    font-size: 18px;
+    font-weight: 100;
+  }
+
+  input {
+    display: block;
+    margin: 0 auto;
+    padding-left: 10px;
+
+    &.fullname {
+      height: 45px;
+
+      &.ng-valid.ng-touched {
+        background-color: #dcd6d6;
+        border: 1px solid white;
+      }
+
+      &.ng-invalid.ng-touched {
+        background-color: #dcd6d6;
+        border: 1px solid red;
+      }
+
+      &.ng-pristine.ng-untouched {
+        background-color: white;
+        border: 1px solid white;
+      }
+    }
+
+    &.email {
+      height: 45px;
+
+      &.ng-valid.ng-touched {
+        background-color: #dcd6d6;
+        border: 1px solid white;
+      }
+
+      &.ng-invalid.ng-touched {
+        background-color: #dcd6d6;
+        border: 1px solid red;
+      }
+
+      &.ng-pristine.ng-untouched {
+        background-color: white;
+        border: 1px solid white;
+      }
+
+    }
+
+    &.send {
+      margin: 15px auto 0;
+      display: block;
+      width: 295px;
+      height: 40px;
+      background-color: darkorange;
+      border-radius: 4px;
+      text-transform: uppercase;
+      color: white;
+      border: none;
+      font-size: 26px;
+    }
+  }
+
+  textarea {
+    &.message {
+      display: block;
+      margin: 0 auto;
+      width: 300px;
+      height: 150px;
+      vertical-align: top;
+
+      &.ng-valid.ng-touched {
+        background-color: #dcd6d6;
+        border: 1px solid white;
+      }
+
+      &.ng-invalid.ng-touched {
+        background-color: #dcd6d6;
+        border: 1px solid red;
+      }
+
+      &.ng-pristine.ng-untouched {
+        background-color: white;
+        border: 1px solid white;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .contact-page {
+    min-height: 827px;
+  }
+
+  .form-container {
+    width: 760px;
+  }
+
+  .contact-form {
+    width: 400px;
+
+    label {
+      display: inline-block;
+      text-align: left;
+    }
+
+    input {
+      display: inline-block;
+
+      &.fullname {
+        margin-left: 76px;
+      }
+
+      &.email {
+        margin-left: 114px;
+      }
+
+      &.send {
+        margin: 75px auto 10px;
+        width: 320px;
+      }
+    }
+
+    textarea {
+      &.message {
+        display: inline-block;
+        margin-left: 86px;
+        width: 230px;
+        height: 300px;
+      }
+    }
+  }
 }

@@ -4,10 +4,27 @@
   text-transform: uppercase;
 
   li {
-    flex-direction: row;
+    flex-direction: column;
+    border-left: 1px solid white;
   }
 
-  a {
+  a, a:visited {
     padding: 5px 10px;
+    color: white;
+    font-size: 17px;
+    text-decoration: none;
+
+    &:hover {
+      color: darkorange;
+      text-decoration: none;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .main-nav {
+    li {
+      flex-direction: row;
+    }
   }
 }

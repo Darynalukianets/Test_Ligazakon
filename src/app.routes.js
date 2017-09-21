@@ -1,6 +1,3 @@
-/**
- * Created by Дарья on 13.09.2017.
- */
 (function() {
     'use strict';
 
@@ -29,8 +26,7 @@
             .state('about.bundles', {
                 abstract: true,
                 url: '/bundles',
-                temlateUrl: 'components/bundles/bundles.html',
-                // template: '<ui-view/>',
+                template: '<ui-view/>',
                 controller: 'BundlesController'
             })
             .state('about.bundles.list', {

@@ -1,1 +1,6 @@
-<div class="package" ng-repeat="item in packages"><a ng-href="#/bundles/{{item.id}}">{{item.name}}</a></div>
+<div class="packages-container">
+	<div class="package" ng-repeat="item in packages">
+		<a ui-sref="about.bundles.descr({id: item.id})">{{item.name}}</a>
+	</div>
+</div>
+

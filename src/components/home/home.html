@@ -1,13 +1,19 @@
 <div ng-controller="HomeController">
 	<div class="slogan">
-		<h2>{{slogan.head}}</h2>
-		<p>{{slogan.text}}</p>
+		<div class="content-container">
+			<h2 ng-mouseover="callImgFetchService();">{{slogan.head}}</h2>
+			<p>{{slogan.text}}</p>
+		</div>
 	</div>
-	<div class="services">
-		<div ng-repeat="service in services" class="service">
-			<h3>{{service.header}}</h3>
-			<img src="" alt="">
-			<p>{{service.text}}</p>
+	<div class="services-container">
+		<div class="content-container">
+			<div class="services">
+				<div ng-repeat="service in services" class="service">
+					<h3>{{service.header}}</h3>
+					<img ng-src="{{service.icon}}" alt="" class="service-icon">
+					<p>{{service.text}}</p>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

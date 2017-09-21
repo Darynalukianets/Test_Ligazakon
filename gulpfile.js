@@ -32,13 +32,11 @@ gulp.task('html', function() {
     return gulp.src('src/index.html')
         .pipe(nginclude()) // put template with ng-include (only for index.html)
         .pipe(gulp.dest('dist/'));
-    // .pipe(notify({ message: 'Html task complete' }));
 });
 
 gulp.task('bower', function() {
     var jsFilter = gulpFilter('**/*.js', { restore: true });
     var cssFilter = gulpFilter('**/*.css', { restore: true });
-    // var fontFilter = gulpFilter('**/*.+(eot|svg|ttf|woff|woff2)');
 
     return gulp.src('bower.json')
         .pipe(bower())
@@ -52,14 +50,6 @@ gulp.task('bower', function() {
         .pipe(cssnano())
         .pipe(gulp.dest('dist/css'))
         .pipe(cssFilter.restore)
-        // .pipe(fontFilter)
-        // .pipe(rename(function(path) {
-        //     if (~path.dirname.indexOf('fonts')) {
-        //         path.dirname = '/fonts'
-        //     }
-        // }))
-        // .pipe(gulp.dest('dist'));
-    // .pipe(notify({ message: 'Bower task complete' }));
 });
 
 gulp.task('styles', function() {
@@ -79,19 +69,17 @@ gulp.task('styles', function() {
         .pipe(sass())
         .pipe(autoprefixer('last 2 version'))
         .pipe(gulpif(!args.prod, sourcemaps.write()))
-        // .pipe(gulpif(args.prod, rename({suffix: '.min'})))
         .pipe(gulpif(args.prod, cssnano()))
         .pipe(gulp.dest('dist/css'));
-    // .pipe(notify({ message: 'Styles task complete' }));
 });
 
 gulp.task('scripts', function() {
     var scripts = gulp.src([
         'src/app.js',
         'src/app.*.js',
-        'src/**/**/*.js'//подкорректировать в зависимости от наличия других файлов в корне с конфигами8
+        'src/**/**/*.js'
     ])
-        .pipe(embedTemplates({basePath:'src'})) // put html templates
+        .pipe(embedTemplates({basePath:'src'}))
         .pipe(jshint({esversion: 6}))
         .pipe(jshint.reporter('default'))
         .pipe(gulpif(!args.prod, sourcemaps.init()))
@@ -100,7 +88,6 @@ gulp.task('scripts', function() {
         }))
         .pipe(concat('index.js'))
         .pipe(gulpif(args.prod, ngAnnotate()))
-        // .pipe(gulpif(args.prod, rename({suffix: '.min'})))
         .pipe(gulpif(args.prod, uglify()))
         .pipe(gulpif(!args.prod, sourcemaps.write()))
         .pipe(concat('scripts.js'));
@@ -118,13 +105,11 @@ gulp.task('scripts', function() {
     return merge(scripts, config, templates)
         .pipe(concat('index.js'))
         .pipe(gulp.dest('dist/js'))
-    // .pipe(notify({ message: 'Scripts task complete' }));
 });
 
 gulp.task('assets', function() {
     return gulp.src('src/assets/**/*')
         .pipe(gulp.dest('dist/assets'));
-    // .pipe(notify({ message: 'Assets task complete' }));
 });
 
 gulp.task('clean', function(done) {
@@ -137,7 +122,6 @@ gulp.task('build', ['clean'], function() {
 });
 
 gulp.task('watch', function() {
-    // gulp.watch('src/**/**/*.html', ['scripts']);
     gulp.watch(['src/index.html'], ['html']);
     gulp.watch('src/**/!(*spec).+(js|html)', ['scripts']);
     gulp.watch('src/**/**/*.scss', ['styles']);

@@ -1,23 +1,47 @@
 header {
 
-  display-color: #18334a;
+  background-color: #3e5050;
 
   .header-container {
     display: flex;
+    flex-direction: column;
   }
 
-  h1, .nav-container {
-    flex-direction: row;
+  .logo, .nav-container {
     display: flex;
-    align-items: center;
+    justify-content: center;
   }
 
-  h1 {
-    width: 20%;
+  .logo {
+    width: 100%;
+    padding: 0 15px;
+    color: darkorange;
+    text-transform: uppercase;
   }
 
   .nav-container {
-    width: 80%;
-    justify-content: flex-end;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  header {
+
+    .header-container {
+      flex-direction: row;
+    }
+
+    .logo, .nav-container {
+      align-items: center;
+    }
+
+    .logo {
+      width: 20%;
+    }
+
+    .nav-container {
+      width: 80%;
+      justify-content: flex-end;
+    }
   }
 }
